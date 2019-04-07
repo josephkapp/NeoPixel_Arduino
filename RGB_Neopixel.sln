@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.438
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RGB_Neopixel", "RGB_Neopixel.vcxproj", "{C5F80730-F44F-4478-BDAE-6634EFC2CA88}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RGB_Neopixel_Desktop_GUI", "RGB_Neopixel_Desktop_GUI\RGB_Neopixel_Desktop_GUI.vcxproj", "{9D8282C7-7998-4E76-9CF7-6EA800D7731F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Debug|x64 = Debug|x64
+		Release|Win32 = Release|Win32
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C5F80730-F44F-4478-BDAE-6634EFC2CA88}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C5F80730-F44F-4478-BDAE-6634EFC2CA88}.Debug|x64.ActiveCfg = Debug|Win32
+		{C5F80730-F44F-4478-BDAE-6634EFC2CA88}.Release|Win32.ActiveCfg = Release|Win32
+		{C5F80730-F44F-4478-BDAE-6634EFC2CA88}.Release|Win32.Build.0 = Release|Win32
+		{C5F80730-F44F-4478-BDAE-6634EFC2CA88}.Release|x64.ActiveCfg = Release|Win32
+		{9D8282C7-7998-4E76-9CF7-6EA800D7731F}.Debug|Win32.ActiveCfg = Debug|x64
+		{9D8282C7-7998-4E76-9CF7-6EA800D7731F}.Debug|x64.ActiveCfg = Debug|x64
+		{9D8282C7-7998-4E76-9CF7-6EA800D7731F}.Debug|x64.Build.0 = Debug|x64
+		{9D8282C7-7998-4E76-9CF7-6EA800D7731F}.Release|Win32.ActiveCfg = Release|x64
+		{9D8282C7-7998-4E76-9CF7-6EA800D7731F}.Release|x64.ActiveCfg = Release|x64
+		{9D8282C7-7998-4E76-9CF7-6EA800D7731F}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {036D5D65-48EC-4BA6-8530-6AEAB0708A30}
+	EndGlobalSection
+EndGlobal
