@@ -1,2 +1,9 @@
-﻿  RGB_Neopixel_Desktop_GUI.cpp
+﻿  Uic'ing RGB_Neopixel_Desktop_GUI.ui...
+  Rcc'ing RGB_Neopixel_Desktop_GUI.qrc...
+  Moc'ing RGB_Neopixel_Desktop_GUI.h...
+   RCC: Warning: No resources in 'C:\Users\Joseph\Documents\Arduino\RGB_Neopixel\RGB_Neopixel_Desktop_GUI\RGB_Neopixel_Desktop_GUI.qrc'.
+  main.cpp
+  RGB_Neopixel_Desktop_GUI.cpp
+  qrc_RGB_Neopixel_Desktop_GUI.cpp
+  moc_RGB_Neopixel_Desktop_GUI.cpp
   RGB_Neopixel_Desktop_GUI.vcxproj -> C:\Users\Joseph\Documents\Arduino\RGB_Neopixel\x64\Release\RGB_Neopixel_Desktop_GUI.exe
