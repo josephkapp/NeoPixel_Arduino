@@ -35,8 +35,8 @@ RGB_Neopixel_Desktop_GUI::RGB_Neopixel_Desktop_GUI(QWidget *parent)
 	connect(ui.Animation_comboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(Animation_combobox_currentIndexChanged(int)));
 	connect(ui.Apply_pushButton, SIGNAL(released()), this, SLOT(Apply_pushButton_clicked()));
 	connect(ui.Off_pushButton, SIGNAL(released()), this, SLOT(Off_pushButton_clicked()));
-	//connect(ui.actionQuit, SIGNAL(triggered()), this, SLOT(quit()));
-	//connect(ui.actionAbout, SIGNAL(triggered()), this, SLOT(about()));
+	connect(ui.actionQuit, SIGNAL(triggered()), this, SLOT(quit()));
+	connect(ui.actionAbout, SIGNAL(triggered()), this, SLOT(about()));
 	connect(ui.COMPort_comboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(selectComPort(int)));
 
 	//Set up Arduino connection
