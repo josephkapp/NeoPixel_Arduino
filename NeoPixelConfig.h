@@ -1,10 +1,18 @@
+// NEOPIXEL SETTINGS
+#define NUM_LEDS                      240
+#define PIN                           6       //Pin number used to communicate with the Neopixel Strip
+#define INPUT_BUFFER_SIZE             26
+#define AURORA_GLOW_GROUPSIZE         10
+#define RANDOM_COLOR_GROUPSIZE        5
+#define STRIP_TYPE                    NEO_GRB //NEO_GRBW for RGBW strip
+
 // COMMON SETTINGS
 // ----------------------------------------------------------------------------------------------
 // These settings are used in both SW UART, HW UART and SPI mode
 // ----------------------------------------------------------------------------------------------
 #define BUFSIZE                        128   // Size of the read buffer for incoming data
 #define VERBOSE_MODE                   true  // If set to 'true' enables debug output
-
+#define ENABLE_BLUETOOTH               true  // Set to true if this arduino is using bluetooth, otherwise set to false so bluetooth code does not run
 
 // SOFTWARE UART SETTINGS
 // ----------------------------------------------------------------------------------------------

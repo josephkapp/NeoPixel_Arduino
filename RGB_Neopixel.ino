@@ -2,13 +2,9 @@
 #include <EEPROM.h>
 #include "Adafruit_BLE.h"
 #include "Adafruit_BluefruitLE_UART.h"
-#include "BluefruitConfig.h"
+#include "NeoPixelConfig.h"
 #include <SoftwareSerial.h>
 
-//#define NUM_LEDS 59 
-#define NUM_LEDS 240 
-#define PIN 6
-#define INPUT_BUFFER_SIZE 26
 
 enum Animation { STRIPSTATICCOLOR, STRIPFADECOLOR, RAINBOWCYCLE, RAINBOWCHASE, THEATERCHASE, RANDOMCOLORPIXEL, AURORAGLOW };
 enum ColorSelection { RED, GREEN, BLUE, YELLOW, PURPLE, ORANGE };
@@ -29,7 +25,6 @@ public:
 	uint8_t green;
 	uint8_t blue;
 	uint8_t white;
-	uint8_t groupSize;
 	uint8_t groupStep;
 	uint8_t numOfGroups;
 	uint8_t numOfPreSetColors = 5; //Starting count from 0
@@ -411,7 +406,6 @@ public:
 	{
 		selectedAnimation = RANDOMCOLORPIXEL;
 		selectedDirection = REVERSE;
-		groupSize = 5;
 		currentColorStep = 0;
 		totalColorStep = 255;
 		red = 0;
@@ -424,14 +418,15 @@ public:
 		randomSeed(analogRead(0));
 		//Initilize the strip with a random color for each LED
 
-		numOfGroups = (NUM_LEDS + groupSize - 1) / groupSize; //Round up the number of groups
+		numOfGroups = (NUM_LEDS + RANDOM_COLOR_GROUPSIZE - 1) / RANDOM_COLOR_GROUPSIZE; //Round up the number of groups
 
 		for (int i = 0; i < numOfGroups; i++)
 		{
-			red = random(0, 255);
-			green = random(0, 255);
-			blue = random(0, 255);
-
+      uint8_t rand = random(0,5);
+      cur_color = SetColor(rand, true);
+      red = curColor & 0xFF;
+      green = (curColor >> 8) & 0xFF;
+      blue = (curColor >> 16) & 0xFF;
 			FillLEDRange(LEDIndex, LEDIndex + groupSize, red, green, blue, 0);
 			LEDIndex += groupSize;
 		}
@@ -535,7 +530,6 @@ public:
 	{
 		selectedAnimation = AURORAGLOW;
 		selectedDirection = FADEOUT;
-		groupSize = 10;
 		groupStep = 0;
 		currentColorStep = 0;
 		totalColorStep = 0;
@@ -547,7 +541,7 @@ public:
 		next_blue = 0;
 		next_green = 0;
 		next_red = 0;
-		numOfGroups = (NUM_LEDS + groupSize - 1) / groupSize; //Round up the number of groups
+		numOfGroups = (NUM_LEDS + AURORA_GLOW_GROUPSIZE - 1) / AURORA_GLOW_GROUPSIZE; //Round up the number of groups
 
 		for (int i = 0; i < NUM_LEDS; i++)
 		{
@@ -786,12 +780,8 @@ public:
 	}
 };
 
-//NeoPixelAnimations strip = NeoPixelAnimations(NUM_LEDS, PIN, NEO_GRBW + NEO_KHZ800);
-NeoPixelAnimations strip = NeoPixelAnimations(NUM_LEDS, PIN, NEO_GRB + NEO_KHZ800);
 int selectedAnimation;
-
 unsigned int currentValue;
-
 uint8_t redVal;
 uint8_t greenVal;
 uint8_t blueVal;
@@ -800,10 +790,10 @@ unsigned int speedVal;
 uint8_t directionVal;
 bool newAnimationSelected;
 unsigned int speedValTemp;
-
 char bluefruitBuffer[INPUT_BUFFER_SIZE];
 int bufferOffset;
 
+NeoPixelAnimations strip = NeoPixelAnimations(NUM_LEDS, PIN, STRIP_TYPE + NEO_KHZ800);
 SoftwareSerial bluefruitSS = SoftwareSerial(BLUEFRUIT_SWUART_TXD_PIN, BLUEFRUIT_SWUART_RXD_PIN);
 Adafruit_BluefruitLE_UART ble(bluefruitSS, BLUEFRUIT_UART_MODE_PIN, BLUEFRUIT_UART_CTS_PIN, BLUEFRUIT_UART_RTS_PIN);
 
@@ -812,55 +802,56 @@ void setup()
 
 	Serial.begin(57600);
 	Serial.println("Serial port is set up on ardiuno...");
-	Serial.print(F("Initialising the Bluefruit LE module: "));
-	if (!ble.begin(VERBOSE_MODE))
-	{
-		Serial.println("Couldn't find Bluefruit, make sure it's in CoMmanD mode & check wiring?");
-	}
-	Serial.println(F("OK!"));
 
-	ble.echo(false);
-	ble.verbose(false);
-
-	//Wait for bluetooth module to connect
-	//while (!ble.isConnected()) {
-	//	delay(500);
-	//}
-
-	if (ble.isVersionAtLeast(MINIMUM_FIRMWARE_VERSION))
-	{
-		// Change Mode LED Activity
-		Serial.println(F("Change LED activity to " MODE_LED_BEHAVIOUR));
-		ble.sendCommandCheckOK("AT+HWModeLED=" MODE_LED_BEHAVIOUR);
-	}
-	ble.setMode(BLUEFRUIT_MODE_DATA);
+  if(ENABLE_BLUETOOTH)
+  {
+    Serial.print(F("Initialising the Bluefruit LE module: "));
+    if (!ble.begin(VERBOSE_MODE))
+    {
+      Serial.println("Couldn't find Bluefruit, make sure it's in CoMmanD mode & check wiring?");
+    }
+    Serial.println(F("OK!"));
+  
+    ble.echo(false);
+    ble.verbose(false);
+  
+    //Wait for bluetooth module to connect
+    //while (!ble.isConnected()) {
+    //  delay(500);
+    //}
+  
+    if (ble.isVersionAtLeast(MINIMUM_FIRMWARE_VERSION))
+    {
+      // Change Mode LED Activity
+      Serial.println(F("Change LED activity to " MODE_LED_BEHAVIOUR));
+      ble.sendCommandCheckOK("AT+HWModeLED=" MODE_LED_BEHAVIOUR);
+    }
+    ble.setMode(BLUEFRUIT_MODE_DATA);
+  }
+	
 
 	strip.begin();
 
 	Serial.println("Starting default animation...");
 	strip.StripStaticColor(0, 0, 0, 0); //Default to off
-	//strip.RainbowChase();
 
+  //Initilize values
 	selectedAnimation = 0;
-	speedVal = 25;
+	speedVal = 0;
 	newAnimationSelected = false;
-
 	redVal = 0;
 	greenVal = 0;
 	blueVal = 0;
 	directionVal = 0;
 	whiteVal = 0;
-
 	bufferOffset = 0;
 }
 void loop() {
 
 	if (Serial.available() > 0)
 	{
-		Serial.println("In loop 1");
 		while (1) //Force an infinite loop while we read the entire command from serial so the show() command does not cause data loss since show() uses interupts 
 		{
-			Serial.println("In loop 2");
 			char c = Serial.read();
 			if (c == 'A')
 				selectedAnimation = Serial.parseInt();
@@ -883,21 +874,24 @@ void loop() {
 		}
 	}
 
-	while (ble.available())
-	{
-		int c = ble.read();
-		//Serial.println((char)c);
-		bluefruitBuffer[bufferOffset] = (char)c;
-		bufferOffset++;
-
-		if (c == 'T')
-		{
-			//Serial.println(bluefruitBuffer);
-			parseBuffer();
-			speedVal = speedValTemp;
-			newAnimationSelected = true;
-		}
-	}	
+  if(ENABLE_BLUETOOTH)
+  {
+    while (ble.available())
+    {
+      int c = ble.read();
+      //Serial.println((char)c);
+      bluefruitBuffer[bufferOffset] = (char)c;
+      bufferOffset++;
+  
+      if (c == 'T')
+      {
+        //Serial.println(bluefruitBuffer);
+        parseBuffer();
+        speedVal = speedValTemp;
+        newAnimationSelected = true;
+      }
+    } 
+  }
 
 	if (newAnimationSelected == true)
 	{
