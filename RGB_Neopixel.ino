@@ -422,13 +422,13 @@ public:
 
 		for (int i = 0; i < numOfGroups; i++)
 		{
-      uint8_t rand = random(0,5);
-      cur_color = SetColor(rand, true);
-      red = curColor & 0xFF;
-      green = (curColor >> 8) & 0xFF;
-      blue = (curColor >> 16) & 0xFF;
-			FillLEDRange(LEDIndex, LEDIndex + groupSize, red, green, blue, 0);
-			LEDIndex += groupSize;
+		  uint8_t rand = random(0,5);
+		  curr_col = SetColor(rand, true);
+		  red = curColor & 0xFF;
+		  green = (curColor >> 8) & 0xFF;
+		  blue = (curColor >> 16) & 0xFF;
+		  FillLEDRange(LEDIndex, LEDIndex + RANDOM_COLOR_GROUPSIZE, red, green, blue, 0);
+		  LEDIndex += RANDOM_COLOR_GROUPSIZE;
 		}
 
 		show();
@@ -561,32 +561,32 @@ public:
 			next_blue = curColor & 0xFF;
 			next_green = (curColor >> 8) & 0xFF;
 			next_red = (curColor >> 16) & 0xFF;
-			FadeFroup(currentColorStep + 50, groupSize, FADEIN, currentT, next_red, next_green, next_blue);
+			FadeFroup(currentColorStep + 50, AURORA_GLOW_GROUPSIZE, FADEIN, currentT, next_red, next_green, next_blue);
 			curColor = SetColor(4, true);
 			next_blue = curColor & 0xFF;
 			next_green = (curColor >> 8) & 0xFF;
 			next_red = (curColor >> 16) & 0xFF;
-			FadeFroup(currentColorStep + 40, groupSize, FADEOUT, currentT, next_red, next_green, next_blue);
+			FadeFroup(currentColorStep + 40, AURORA_GLOW_GROUPSIZE, FADEOUT, currentT, next_red, next_green, next_blue);
 			curColor = SetColor(3, true);
 			next_blue = curColor & 0xFF;
 			next_green = (curColor >> 8) & 0xFF;
 			next_red = (curColor >> 16) & 0xFF;
-			FadeFroup(currentColorStep + 30, groupSize, FADEIN, currentT, next_red, next_green, next_blue);
+			FadeFroup(currentColorStep + 30, AURORA_GLOW_GROUPSIZE, FADEIN, currentT, next_red, next_green, next_blue);
 			curColor = SetColor(2, true);
 			next_blue = curColor & 0xFF;
 			next_green = (curColor >> 8) & 0xFF;
 			next_red = (curColor >> 16) & 0xFF;
-			FadeFroup(currentColorStep + 20, groupSize, FADEOUT, currentT, next_red, next_green, next_blue);
+			FadeFroup(currentColorStep + 20, AURORA_GLOW_GROUPSIZE, FADEOUT, currentT, next_red, next_green, next_blue);
 			curColor = SetColor(1, true);
 			next_blue = curColor & 0xFF;
 			next_green = (curColor >> 8) & 0xFF;
 			next_red = (curColor >> 16) & 0xFF;
-			FadeFroup(currentColorStep + 10, groupSize, FADEIN, currentT, next_red, next_green, next_blue);
+			FadeFroup(currentColorStep + 10, AURORA_GLOW_GROUPSIZE, FADEIN, currentT, next_red, next_green, next_blue);
 			curColor = SetColor(0, true);
 			next_blue = curColor & 0xFF;
 			next_green = (curColor >> 8) & 0xFF;
 			next_red = (curColor >> 16) & 0xFF;
-			FadeFroup(currentColorStep, groupSize, FADEOUT, currentT, next_red, next_green, next_blue);
+			FadeFroup(currentColorStep, AURORA_GLOW_GROUPSIZE, FADEOUT, currentT, next_red, next_green, next_blue);
 		}
 		else if (groupStep == 1)
 		{
@@ -594,32 +594,32 @@ public:
 			next_blue = curColor & 0xFF;
 			next_green = (curColor >> 8) & 0xFF;
 			next_red = (curColor >> 16) & 0xFF;
-			FadeFroup(currentColorStep + 50, groupSize, FADEOUT, currentT, next_red, next_green, next_blue);
+			FadeFroup(currentColorStep + 50, AURORA_GLOW_GROUPSIZE, FADEOUT, currentT, next_red, next_green, next_blue);
 			curColor = SetColor(4, true);
 			next_blue = curColor & 0xFF;
 			next_green = (curColor >> 8) & 0xFF;
 			next_red = (curColor >> 16) & 0xFF;
-			FadeFroup(currentColorStep + 40, groupSize, FADEIN, currentT, next_red, next_green, next_blue);
+			FadeFroup(currentColorStep + 40, AURORA_GLOW_GROUPSIZE, FADEIN, currentT, next_red, next_green, next_blue);
 			curColor = SetColor(3, true);
 			next_blue = curColor & 0xFF;
 			next_green = (curColor >> 8) & 0xFF;
 			next_red = (curColor >> 16) & 0xFF;
-			FadeFroup(currentColorStep + 30, groupSize, FADEOUT, currentT, next_red, next_green, next_blue);
+			FadeFroup(currentColorStep + 30, AURORA_GLOW_GROUPSIZE, FADEOUT, currentT, next_red, next_green, next_blue);
 			curColor = SetColor(2, true);
 			next_blue = curColor & 0xFF;
 			next_green = (curColor >> 8) & 0xFF;
 			next_red = (curColor >> 16) & 0xFF;
-			FadeFroup(currentColorStep + 20, groupSize, FADEIN, currentT, next_red, next_green, next_blue);
+			FadeFroup(currentColorStep + 20, AURORA_GLOW_GROUPSIZE, FADEIN, currentT, next_red, next_green, next_blue);
 			curColor = SetColor(1, true);
 			next_blue = curColor & 0xFF;
 			next_green = (curColor >> 8) & 0xFF;
 			next_red = (curColor >> 16) & 0xFF;
-			FadeFroup(currentColorStep + 10, groupSize, FADEOUT, currentT, next_red, next_green, next_blue);
+			FadeFroup(currentColorStep + 10, AURORA_GLOW_GROUPSIZE, FADEOUT, currentT, next_red, next_green, next_blue);
 			curColor = SetColor(0, true);
 			next_blue = curColor & 0xFF;
 			next_green = (curColor >> 8) & 0xFF;
 			next_red = (curColor >> 16) & 0xFF;
-			FadeFroup(currentColorStep, groupSize, FADEIN, currentT, next_red, next_green, next_blue);
+			FadeFroup(currentColorStep, AURORA_GLOW_GROUPSIZE, FADEIN, currentT, next_red, next_green, next_blue);
 		}
 
 		if (currentT == 1)
